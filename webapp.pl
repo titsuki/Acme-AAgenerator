@@ -33,7 +33,6 @@ post '/convert' => sub {
 	$preview = $aa->render();
     }
 
-    $self->stash('preview' => $preview);
     $self->render('convert', 'preview' => $preview);
 };
 
