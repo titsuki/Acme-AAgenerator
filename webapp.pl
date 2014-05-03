@@ -2,6 +2,7 @@ use Mojolicious::Lite;
 use Text::AAlib qw/:all/;
 use Imager;
 use Data::Dumper;
+use warnings FATAL => 'all';
 
 get '/' => sub {
     my $self = shift;
@@ -29,16 +30,11 @@ post '/convert' => sub {
     	    mask   => AA_REVERSE_MASK,
     	    );
     	$aa->put_image(image => $img);
-    	$preview = $aa->render();
+	$preview = $aa->render();
     }
 
-    $self->render('convert',up => $preview);
-    # return $self->redirect_to('/result');
-};
-
-get 'result' => sub {
-    my $self = shift;
-    $self->render(text => "result");
+    $self->stash('preview' => $preview);
+    $self->render('convert', 'preview' => $preview);
 };
 
 app->start;
@@ -52,15 +48,26 @@ __DATA__
 filepath: <input type="file" name="upload">
     <input type="submit" value="Submit">
 </form>
-Welcome to the Mojolicious real-time web framework!
+<div id="loadingimage" style="display: none;">
+<img src="/img/loading.gif">
+</div>
 
 @@ convert.html.ep
 % layout 'default';
 % title 'Welcome';
-<%= stash('up') %>
+<%= stash('preview') %>
 
 @@ layouts/default.html.ep
 <!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+ $(document).ready(function(){
+   $('form').submit(function(){
+     $(this).hide();
+     $('#loadingimage').show();
+   });
+ });
+</script>
 <html>
   <head><title><%= title %></title></head>
   <body><%= content %></body>
