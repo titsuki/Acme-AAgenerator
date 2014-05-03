@@ -43,7 +43,8 @@ __DATA__
 
 @@ index.html.ep
 % layout 'default';
-% title 'Welcome';
+% title 'AA-generator';
+<h1>AA-generator</h1>
 <form action="convert" method="post" enctype="multipart/form-data">
 filepath: <input type="file" name="upload">
     <input type="submit" value="Submit">
@@ -53,9 +54,40 @@ filepath: <input type="file" name="upload">
 </div>
 
 @@ convert.html.ep
-% layout 'default';
-% title 'Welcome';
+% layout 'preview';
+% title 'AA-generator';
+<h1>AA-generator</h1>
+<div id="preview">
+<pre>
 <%= stash('preview') %>
+</pre>
+</div>
+<div id="slider">
+</div>
+
+@@ layouts/preview.html.ep
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" media="all" />
+<script>
+ $(document).ready(function(){
+   $("#slider").slider({
+     value:50,
+     min:10,
+     max:100,
+     step:1,
+     range:"min",
+     change : function(event,ui){
+       $('#preview').css("zoom",ui.value + "%");
+     }
+   });
+});
+</script>
+<html>
+  <head><title><%= title %></title></head>
+  <body><%= content %></body>
+</html>
 
 @@ layouts/default.html.ep
 <!DOCTYPE html>
