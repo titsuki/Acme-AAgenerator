@@ -46,7 +46,7 @@ __DATA__
 % title 'AA-generator';
 <h1>AA-generator</h1>
 <form action="convert" method="post" enctype="multipart/form-data">
-filepath: <input type="file" name="upload">
+filepath: <input type="file" name="upload" accept="image/png" required>
     <input type="submit" value="Submit">
 </form>
 <div id="loadingimage" style="display: none;">
