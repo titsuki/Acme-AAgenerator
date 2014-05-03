@@ -1,1 +1,1 @@
-The Web Application for generating ASCII Arts
+The Web Application for generating ASCII Arts implemented by Mojolicious.
